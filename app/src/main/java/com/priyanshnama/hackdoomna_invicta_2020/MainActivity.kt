@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     var dfp : String = ""
     var a : Int = 0
     var b : Int = 0
-    var file: File = TODO()
+    var file: File? = null
     private var PICKFILE_REQUEST_CODE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,21 +42,21 @@ class MainActivity : AppCompatActivity() {
 
             a = Key1.text.toString().toInt()
             b = Key2.text.toString().toInt()
-            efp = encrypt(file, a, b)
+            encrypt(file, a, b)
         }
         decrypt!!.setOnClickListener {
 
             a = Key1.text.toString().toInt()
             b = Key2.text.toString().toInt()
-            dfp = decrypt(file, a, b)
+            decrypt(file, a, b)
         }
 
     }
 
 
 
-    fun encrypt(file: File, a: Int, b : Int):String {
-        var bytearray: ByteArray = file.readBytes()
+    fun encrypt(file: File?, a: Int, b : Int):Int {
+        var bytearray: ByteArray = file!!.readBytes()
 
         var bytearray2 = bytearray
 
@@ -78,12 +78,11 @@ class MainActivity : AppCompatActivity() {
         }
         println(bytearray2.size)
         file.writeBytes(bytearray2)
-
-        return ("decrypt" + file)
+        return 1
     }
 
-    fun decrypt(file: File, a: Int, b : Int):String {
-        var bytearray: ByteArray = file.readBytes()
+    fun decrypt(file: File?, a: Int, b : Int): Int {
+        var bytearray: ByteArray = file!!.readBytes()
 
         var bytearray2 = bytearray
 
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         }
         println(bytearray2.size)
         file.writeBytes(bytearray2)
+        return 1
 
-        return ("decrypt" + file)
     }
 }
