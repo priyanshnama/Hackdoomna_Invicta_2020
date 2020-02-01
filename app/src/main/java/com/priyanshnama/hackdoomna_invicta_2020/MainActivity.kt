@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     var dfp : String = ""
     var a : Int = 0
     var b : Int = 0
-    var file :File()
+    var file: File? = null
     private var PICKFILE_REQUEST_CODE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,47 +42,70 @@ class MainActivity : AppCompatActivity() {
 
             a = Key1.text.toString().toInt()
             b = Key2.text.toString().toInt()
-            dfp = decrypt(file, a, b)
+            efp = encrypt(file, a, b)
         }
         decrypt!!.setOnClickListener {
 
             a = Key1.text.toString().toInt()
             b = Key2.text.toString().toInt()
-            efp = encrypt(file, a, b)
+            dfp = decrypt(file, a, b)
         }
 
     }
 
 
 
-    fun encrypt(file : File , a: Int, b : Int) {
-
+    fun encrypt(file: File, a: Int, b : Int):String {
         var bytearray: ByteArray = file.readBytes()
 
         var bytearray2 = bytearray
 
         var arr = IntArray(bytearray.size)
-        arr[a-1] = 1;arr[b-1] = -1;
-        for(i in 0..bytearray.size-1){
-            if((arr[i] > 0) or (arr[i] < 0)){
-                if(i + a < bytearray.size)arr[i + a] = arr[i + a] + 1
-                if(i + b < bytearray.size)arr[i + b] = arr[i + b] - 1
+        arr[a - 1] = 1;arr[b - 1] = -1;
+        for (i in 0..bytearray.size - 1) {
+            if ((arr[i] > 0) or (arr[i] < 0)) {
+                if (i + a < bytearray.size) arr[i + a] = arr[i + a] + 1
+                if (i + b < bytearray.size) arr[i + b] = arr[i + b] - 1
             }
         }
-        for(i in 0..bytearray2.size-1)
-        {
-            if(arr[i] > 0){
-                for(o in 0..arr[i])bytearray2[i]=bytearray2[i].plus(b).toByte()
+        for (i in 0..bytearray2.size - 1) {
+            if (arr[i] > 0) {
+                for (o in 0..arr[i]) bytearray2[i] = bytearray2[i].plus(b).toByte()
             }
-            if(arr[i] < 0){
-                for(o in arr[i]..0)bytearray2[i]=bytearray2[i].minus(a).toByte()
+            if (arr[i] < 0) {
+                for (o in arr[i]..0) bytearray2[i] = bytearray2[i].minus(a).toByte()
             }
         }
         println(bytearray2.size)
         file.writeBytes(bytearray2)
+
+        return ("decrypt" + file)
     }
 
     fun decrypt(file: File, a: Int, b : Int):String {
+        var bytearray: ByteArray = file.readBytes()
 
+        var bytearray2 = bytearray
 
+        var arr = IntArray(bytearray.size)
+        arr[a - 1] = 1;arr[b - 1] = -1;
+        for (i in 0..bytearray.size - 1) {
+            if ((arr[i] > 0) or (arr[i] < 0)) {
+                if (i + a < bytearray.size) arr[i + a] = arr[i + a] + 1
+                if (i + b < bytearray.size) arr[i + b] = arr[i + b] - 1
+            }
+        }
+        for (i in 0..bytearray2.size - 1) {
+            if (arr[i] > 0) {
+                for (o in 0..arr[i]) bytearray2[i] = bytearray2[i].plus(b).toByte()
+            }
+            if (arr[i] < 0) {
+                for (o in arr[i]..0) bytearray2[i] = bytearray2[i].minus(a).toByte()
+            }
+        }
+        println(bytearray2.size)
+        file.writeBytes(bytearray2)
+
+        return ("decrypt" + file)
+    }
 }
