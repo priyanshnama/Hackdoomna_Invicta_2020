@@ -95,12 +95,13 @@ class MainActivity : AppCompatActivity() {
                 if (i + b < bytearray.size) arr[i + b] = arr[i + b] - 1
             }
         }
-        for (i in 0..bytearray2.size - 1) {
-            if (arr[i] > 0) {
-                for (o in 0..arr[i]) bytearray2[i] = bytearray2[i].plus(b).toByte()
+        for(i in 0..bytearray2.size-1)
+        {
+            if(arr[i] > 0){
+                for(o in 0..arr[i])bytearray2[i]=bytearray2[i].minus(b).toByte()
             }
-            if (arr[i] < 0) {
-                for (o in arr[i]..0) bytearray2[i] = bytearray2[i].minus(a).toByte()
+            if(arr[i] < 0){
+                for(o in arr[i]..0)bytearray2[i]=bytearray2[i].plus(a).toByte()
             }
         }
         println(bytearray2.size)
