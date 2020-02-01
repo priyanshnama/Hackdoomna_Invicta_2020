@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     var dfp : String = ""
     var a : Int = 0
     var b : Int = 0
-    var file: File? = null
+    var file: File = TODO()
     private var PICKFILE_REQUEST_CODE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
